@@ -1,0 +1,43 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@ddd-ts/shape':
+        specifier: ^0.0.11
+        version: 0.0.11
+      '@ddd-ts/traits':
+        specifier: ^0.0.11
+        version: 0.0.11
+    devDependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+packages:
+
+  '@ddd-ts/shape@0.0.11':
+    resolution: {integrity: sha512-Z7UGqKIV9DiPuXW2ur/XIGmJjArPQ/PwHooYqMre4t4qqfWpATWt+A34ia49Yfd3xnT7Hhi2aev+FF2/140H8A==}
+
+  '@ddd-ts/traits@0.0.11':
+    resolution: {integrity: sha512-pdmMOCHWbe/rhlSdaa3RGyIC3Wd9PIRKiZhxaTZiluwDEyCUYxENGe6od2fJ1YHjsuZsMOKicdIpehJ+F+ZhTQ==}
+
+  typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  '@ddd-ts/shape@0.0.11':
+    dependencies:
+      '@ddd-ts/traits': 0.0.11
+
+  '@ddd-ts/traits@0.0.11': {}
+
+  typescript@5.4.5: {}
