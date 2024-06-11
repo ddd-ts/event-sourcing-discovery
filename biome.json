@@ -1,54 +1,53 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.6.0/schema.json",
-    "files": {
-      "ignore": ["**/node_modules/**", "**/lib/**"],
-      "ignoreUnknown": true
-    },
-    "vcs": {
-      "enabled": true,
-      "clientKind": "git"
-    },
-    "linter": {
-      "enabled": true,
-      "rules": {
-        "recommended": true,
-        "a11y": {},
-        "complexity": {
-          "noBannedTypes": "error",
-          "useArrowFunction": "off",
-          "noThisInStatic": "off"
-
-        },
-        "correctness": {
-          "useExhaustiveDependencies": "off"
-        },
-        "performance": {},
-        "security": {},
-        "style": {
-          "useBlockStatements": "error",
-          "noCommaOperator": "error",
-          "useImportType": "off",
-        },
-        "suspicious": {
-            "noCommentText": "error",
-            "noArrayIndexKey": "error",
-            "noExplicitAny": "off"
-        },
-        "nursery": {}
-      }
-    },
+  "$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+  "files": {
+    "ignore": ["**/node_modules/**", "**/lib/**"],
+    "ignoreUnknown": true
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {},
+      "complexity": {
+        "noBannedTypes": "error",
+        "useArrowFunction": "off",
+        "noThisInStatic": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+      "performance": {},
+      "security": {},
+      "style": {
+        "useBlockStatements": "error",
+        "noCommaOperator": "error",
+        "useImportType": "off"
+      },
+      "suspicious": {
+        "noCommentText": "error",
+        "noArrayIndexKey": "error",
+        "noExplicitAny": "off"
+      },
+      "nursery": {}
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "javascript": {
     "formatter": {
-      "enabled": true,
-      "indentStyle": "space",
-      "indentWidth": 2
-    },
-    "organizeImports": {
-      "enabled": true
-    },
-    "javascript": {
-      "formatter": {
-        "quoteStyle": "double"
-      }
+      "quoteStyle": "double"
     }
   }
-  
+}
