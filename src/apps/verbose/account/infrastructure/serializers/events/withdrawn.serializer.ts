@@ -1,7 +1,7 @@
-import { Deposited } from "../../domain/account";
+import { Withdrawn } from "../../../domain/account";
 
-export class DepositedSerializer1n {
-  serialize(event: Deposited) {
+export class WithdrawnSerializer1n {
+  serialize(event: Withdrawn) {
     return {
       eventId: event.eventId,
       type: event.type,
@@ -17,15 +17,12 @@ export class DepositedSerializer1n {
   }
 
   deserialize(serialized: ReturnType<this["serialize"]>) {
-    return new Deposited(
+    return new Withdrawn(
       serialized.eventId,
-      {
-        accountId: serialized.payload.accountId,
-        registryId: serialized.payload.registryId,
-        amount: serialized.payload.amount,
-      },
+      serialized.payload.accountId,
+      serialized.payload.registryId,
+      serialized.payload.amount,
       serialized.revision,
-      serialized.occurredAt,
     );
   }
 }

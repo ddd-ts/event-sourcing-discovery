@@ -1,9 +1,9 @@
 import { Account, Deposited } from "../../../account/domain/account";
-import { DepositedSerializer1n } from "../../../account/infrastructure/serializers/deposited.serializer";
+import { DepositedSerializer1n } from "../../../account/infrastructure/serializers/events/deposited.serializer";
 import { Checkpoint, type CheckpointStore } from "../../../framework/checkpoint";
 import { ProjectedStreamConfiguration, type ProjectedStreamReader } from "../../../framework/event-store";
 import { DepositRegistered, Registry } from "../../domain/registry";
-import { DepositRegisteredSerializer1n } from "../../infrastructure/serializers/deposit-registered.serializer";
+import { DepositRegisteredSerializer } from "../../infrastructure/serializers/deposit-registered.serializer";
 import type { RegisterDepositSagaManager } from "./register-deposit.saga-manager";
 
 export class RegisterDepositSagaOrchestrator {
@@ -14,7 +14,7 @@ export class RegisterDepositSagaOrchestrator {
   ) {}
 
   depositedSerializer = new DepositedSerializer1n();
-  depositRegisteredSerializer = new DepositRegisteredSerializer1n();
+  depositRegisteredSerializer = new DepositRegisteredSerializer();
 
   deserialize(serialized: any) {
     switch (serialized.type) {

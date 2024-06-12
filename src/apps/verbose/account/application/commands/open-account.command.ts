@@ -3,7 +3,7 @@ import type { AccountStore } from "../account.store";
 
 export class OpenAccountCommand {
   static readonly type = "OpenAccountCommand";
-  type = OpenAccountCommand.type;
+  readonly type = OpenAccountCommand.type;
   constructor(public readonly registryId: string) {}
 }
 

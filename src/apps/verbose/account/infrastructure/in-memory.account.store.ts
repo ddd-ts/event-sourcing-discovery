@@ -3,9 +3,14 @@ import { AggregateStreamConfiguration } from "../../framework/event-store";
 import type { InMemoryEventStore } from "../../framework/event-store/in-memory/in-memory.event-store";
 import { AccountStore } from "../application/account.store";
 import { Account, type AccountOpened, type Deposited, type Withdrawn } from "../domain/account";
-import { AccountOpenedSerializer1n } from "./serializers/account-opened.serializer";
-import { DepositedSerializer1n } from "./serializers/deposited.serializer";
-import { WithdrawnSerializer1n } from "./serializers/withdrawn.serializer";
+import { AccountOpenedSerializer1n } from "./serializers/events/account-opened.serializer";
+import { DepositedSerializer1n } from "./serializers/events/deposited.serializer";
+import { WithdrawnSerializer1n } from "./serializers/events/withdrawn.serializer";
+
+type EventSerializer<T> = {
+  deserialize(serialized: Fact): T;
+  serialize(event: T): Fact;
+};
 
 export class InMemoryAccountStore implements AccountStore {
   constructor(private readonly eventStore: InMemoryEventStore) {}

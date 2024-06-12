@@ -1,4 +1,4 @@
-import type { AccountOpened } from "../../domain/account";
+import type { AccountOpened } from "../../../domain/account";
 
 export class AccountOpenedSerializer1n {
   serialize(event: AccountOpened) {
@@ -12,7 +12,7 @@ export class AccountOpenedSerializer1n {
       ...("revision" in event && { revision: event.revision }),
       ...("occurredAt" in event && { occurredAt: event.occurredAt }),
       version: 1,
-    };
+    } as const;
   }
 
   deserialize(serialized: ReturnType<this["serialize"]>) {

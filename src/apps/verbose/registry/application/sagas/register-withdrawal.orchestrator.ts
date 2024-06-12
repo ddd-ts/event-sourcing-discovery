@@ -1,9 +1,9 @@
 import { Account, Withdrawn } from "../../../account/domain/account";
-import { WithdrawnSerializer1n } from "../../../account/infrastructure/serializers/withdrawn.serializer";
+import { WithdrawnSerializer1n } from "../../../account/infrastructure/serializers/events/withdrawn.serializer";
 import { Checkpoint, type CheckpointStore } from "../../../framework/checkpoint";
 import { ProjectedStreamConfiguration, type ProjectedStreamReader } from "../../../framework/event-store";
 import { Registry, WithdrawalRegistered } from "../../domain/registry";
-import { WithdrawalRegisteredSerializer1n } from "../../infrastructure/serializers/withdrawal-registered.serializer";
+import { WithdrawalRegisteredSerializer } from "../../infrastructure/serializers/withdrawal-registered.serializer";
 import type { RegisterWithdrawalSagaManager } from "./register-withdrawal.saga-manager";
 
 export class RegisterWithdrawalSagaOrchestrator {
@@ -14,7 +14,7 @@ export class RegisterWithdrawalSagaOrchestrator {
   ) {}
 
   witdrawnSerializer = new WithdrawnSerializer1n();
-  withdrawalRegisteredSerializer = new WithdrawalRegisteredSerializer1n();
+  withdrawalRegisteredSerializer = new WithdrawalRegisteredSerializer();
 
   deserialize(serialized: any) {
     switch (serialized.type) {

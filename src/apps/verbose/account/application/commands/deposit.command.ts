@@ -2,7 +2,7 @@ import type { AccountStore } from "../account.store";
 
 export class DepositCommand {
   static readonly type = "DepositCommand";
-  type = DepositCommand.type;
+  readonly type = DepositCommand.type;
   constructor(
     public readonly accountId: string,
     public readonly amount: number,

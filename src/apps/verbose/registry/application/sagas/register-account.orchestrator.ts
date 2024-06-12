@@ -1,9 +1,9 @@
 import { Account } from "../../../account/domain/account";
-import { AccountOpenedSerializer1n } from "../../../account/infrastructure/serializers/account-opened.serializer";
+import { AccountOpenedSerializer1n } from "../../../account/infrastructure/serializers/events/account-opened.serializer";
 import { Checkpoint, type CheckpointStore } from "../../../framework/checkpoint";
 import { ProjectedStreamConfiguration, type ProjectedStreamReader } from "../../../framework/event-store";
 import { AccountRegistered, Registry } from "../../domain/registry";
-import { AccountRegisteredSerializer1n } from "../../infrastructure/serializers/account-registered.serializer";
+import { AccountRegisteredSerializer } from "../../infrastructure/serializers/account-registered.serializer";
 import type { RegisterAccountSagaManager } from "./register-account.saga-manager";
 
 export class RegisterAccountOrchestrator {
@@ -14,7 +14,7 @@ export class RegisterAccountOrchestrator {
   ) {}
 
   accountOpenedSerializer = new AccountOpenedSerializer1n();
-  accountRegisteredSerializer = new AccountRegisteredSerializer1n();
+  accountRegisteredSerializer = new AccountRegisteredSerializer();
 
   deserialize(serialized: any) {
     switch (serialized.type) {

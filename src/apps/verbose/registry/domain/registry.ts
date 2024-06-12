@@ -4,7 +4,7 @@ import { generateId } from "../../framework/id";
 
 export class RegistryOpened implements EventSourcingEvent {
   static readonly type = "RegistryOpened";
-  type = RegistryOpened.type;
+  readonly type = RegistryOpened.type;
   constructor(
     public readonly eventId: string,
     public readonly registryId: string,
@@ -48,7 +48,7 @@ export class AccountRegistered implements EventSourcingEvent {
 
 export class DepositRegistered implements EventSourcingEvent {
   static readonly type = "DepositRegistered";
-  type = DepositRegistered.type;
+  readonly type = DepositRegistered.type;
   constructor(
     public readonly eventId: string,
     public readonly registryId: string,

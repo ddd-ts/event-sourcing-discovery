@@ -1,7 +1,7 @@
 import type { Change, Fact } from "../../../framework/es-event";
 import { AccountRegistered, RegistryOpened } from "../../domain/registry";
 
-export class AccountRegisteredSerializer1n {
+export class AccountRegisteredSerializer {
   serialize(event: AccountRegistered) {
     return {
       eventId: event.eventId,

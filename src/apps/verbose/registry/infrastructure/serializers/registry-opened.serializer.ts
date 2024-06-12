@@ -1,6 +1,6 @@
 import { RegistryOpened } from "../../domain/registry";
 
-export class RegistryOpenedSerializer1n {
+export class RegistryOpenedSerializer {
   serialize(event: RegistryOpened) {
     return {
       eventId: event.eventId,

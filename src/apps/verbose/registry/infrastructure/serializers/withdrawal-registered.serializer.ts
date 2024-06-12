@@ -1,6 +1,6 @@
 import { WithdrawalRegistered } from "../../domain/registry";
 
-export class WithdrawalRegisteredSerializer1n {
+export class WithdrawalRegisteredSerializer {
   serialize(event: WithdrawalRegistered) {
     return {
       eventId: event.eventId,

@@ -2,8 +2,8 @@ import { Account, Deposited, Withdrawn } from "../../account/domain/account";
 import { ProjectedStreamConfiguration, type ProjectedStreamReader } from "../../framework/event-store";
 import type { CashflowProjection } from "./cashflow.projection";
 import { Checkpoint, type CheckpointStore } from "../../framework/checkpoint";
-import { DepositedSerializer1n } from "../../account/infrastructure/serializers/deposited.serializer";
-import { WithdrawnSerializer1n } from "../../account/infrastructure/serializers/withdrawn.serializer";
+import { DepositedSerializer1n } from "../../account/infrastructure/serializers/events/deposited.serializer";
+import { WithdrawnSerializer1n } from "../../account/infrastructure/serializers/events/withdrawn.serializer";
 
 export class CashflowProjector {
   constructor(

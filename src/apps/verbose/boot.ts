@@ -31,8 +31,71 @@ import { InMemoryRegisterAccountSagaStore } from "./registry/infrastructure/in-m
 import { InMemoryRegisterDepositSagaStore } from "./registry/infrastructure/in-memory.register-deposit.saga-store";
 import { InMemoryRegisterWithdrawalSagaStore } from "./registry/infrastructure/in-memory.register-withdrawal.saga-store";
 import { InMemoryRegistryStore } from "./registry/infrastructure/in-memory.registry.store";
+import { OpenAccountCommandSerializer } from "./account/infrastructure/serializers/commands/open-account.command.serializer";
+import { DepositCommandSerializer } from "./account/infrastructure/serializers/commands/deposit.command.serializer";
+import { WithdrawCommandSerializer } from "./account/infrastructure/serializers/commands/withdraw.command.serializer";
+import { AccountRegistered, DepositRegistered, RegistryOpened, WithdrawalRegistered } from "./registry/domain/registry";
+import { AccountRegisteredSerializer } from "./registry/infrastructure/serializers/account-registered.serializer";
+import { DepositRegisteredSerializer } from "./registry/infrastructure/serializers/deposit-registered.serializer";
+import { WithdrawalRegisteredSerializer } from "./registry/infrastructure/serializers/withdrawal-registered.serializer";
+import { RegistryOpenedSerializer } from "./registry/infrastructure/serializers/registry-opened.serializer";
+
+class CommandSerializerRegistry<Registered extends [string, any][] = []> {
+  store = new Map<string, any>();
+
+  add<Type extends string, S>(commandType: Type, serializer: S) {
+    this.store.set(commandType, serializer);
+    return this as CommandSerializerRegistry<[...Registered, [Type, S]]>;
+  }
+
+  get<Type extends string>(commandType: Type) {
+    return this.store.get(commandType) as Extract<Registered[number], [Type, any]>[1];
+  }
+
+  deserialize<Serialized extends Parameters<Registered[number][1]["deserialize"]>[0] & { type: string }>(
+    command: Serialized,
+  ) {
+    const type = command.type as Serialized["type"];
+    const serializer = this.get(type);
+    return serializer.deserialize(command) as ReturnType<(typeof serializer)["deserialize"]>;
+  }
+}
+
+class EventSerializerRegistry<Registered extends { [type: string]: any }> {
+  store = new Map<string, any>();
+
+  add<Type extends string, S>(eventType: Type, serializer: S) {
+    this.store.set(eventType, serializer);
+    return this as EventSerializerRegistry<Registered & { [K in Type]: S }>;
+  }
+
+  get<Type extends string>(eventType: Type) {
+    return this.store.get(eventType) as Registered[Type];
+  }
+
+  serialize<Type extends string>(event: InstanceType<Registered[Type]>) {
+    const serializer = this.get(event.type);
+    return serializer.serialize(event) as ReturnType<(typeof serializer)["serialize"]>;
+  }
+
+  deserialize<Type extends string>(serialized: { type: Type }) {
+    const serializer = this.get(serialized.type);
+    return serializer.deserialize(serialized) as ReturnType<(typeof serializer)["deserialize"]>;
+  }
+}
 
 export function boot() {
+  const commandSerializerRegistry = new CommandSerializerRegistry()
+    .add(OpenAccountCommand.type, new OpenAccountCommandSerializer())
+    .add(DepositCommand.type, new DepositCommandSerializer())
+    .add(WithdrawCommand.type, new WithdrawCommandSerializer());
+
+  const eventSerializerRegistry = new EventSerializerRegistry()
+    .add(AccountRegistered.type, new AccountRegisteredSerializer())
+    .add(DepositRegistered.type, new DepositRegisteredSerializer())
+    .add(WithdrawalRegistered.type, new WithdrawalRegisteredSerializer())
+    .add(RegistryOpened.type, new RegistryOpenedSerializer());
+
   const commandBus = new InMemoryCommandBus();
   const checkpointStore = new InMemoryCheckpointStore();
   const eventStore = new InMemoryEventStore();
@@ -50,7 +113,7 @@ export function boot() {
   commandBus.register(WithdrawCommand.type, withdrawCommandHandler);
 
   // registry module
-  const registryStore = new InMemoryRegistryStore(eventStore);
+  const registryStore = new InMemoryRegistryStore(eventStore, eventSerializerRegistry);
 
   const openRegistryCommandHandler = new OpenRegistryCommandHandler(registryStore);
   commandBus.register(OpenRegistryCommand.type, openRegistryCommandHandler);

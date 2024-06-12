@@ -1,6 +1,6 @@
 import { DepositRegistered } from "../../domain/registry";
 
-export class DepositRegisteredSerializer1n {
+export class DepositRegisteredSerializer {
   serialize(event: DepositRegistered) {
     return {
       eventId: event.eventId,
